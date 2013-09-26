@@ -1,0 +1,12 @@
+org.jasig.portlet.courses.degreeprogress.model
+org.jasig.portlet.courses.degreeprogress.mvc
+org.jasig.portlet.courses.degreeprogress.mvc.portlet
+org.jasig.portlet.courses.degreeprogress.mvc.servlet
+org.jasig.portlet.courses.degreeprogress.service
+org.jasig.portlet.courses.degreeprogress.service.banner
+org.jasig.portlet.courseschedule.model
+org.jasig.portlet.courseschedule.mvc.portlet
+org.jasig.portlet.courseschedule.mvc.servlet
+org.jasig.portlet.courseschedule.service
+org.jasig.portlet.courseschedule.service.banner
+org.jasig.portlet.courseschedule.taglibs
