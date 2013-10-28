@@ -1,0 +1,19 @@
+.syntax .builtin {
+  color: darkorange;
+}
+
+.syntax .comment {
+  color: darkgray;
+}
+
+.syntax .function {
+  color: goldenrod;
+}
+
+.syntax .number {
+  color: royalblue;
+}
+
+.syntax .string {
+  color: forestgreen;
+}
