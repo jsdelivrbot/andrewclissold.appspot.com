@@ -16,6 +16,7 @@
 
     <!-- Custom styles -->
     <link rel="stylesheet" type="text/css" href="css/styles.min.css">
+    <link rel="stylesheet" type="text/css" href="css/syntax.min.css">
     <link href="http://fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -72,13 +73,54 @@
           </ul>
         </div>
         <div class="col-md-9" role="main">
+
           <h2>Golang Errors</h2>
-          <p>Placeholder content. This will be replaced by a description of a succinct way to check errors in Go.
-          </p>
+
+<br>
+<p>Consider the following idiomatic Go code. Let <code>words</code> be a slice of strings.</p>
+<pre class="syntax"><code><span class="linenumber">1 </span>a, err := <a href="http://golang.org/pkg/strconv/#Atoi" target="_blank">strconv.Atoi</a>(words[<span class="number">0</span>]); if err != <span class="builtin">nil</span> {
+<span class="linenumber">2 </span>     <a href="http://golang.org/pkg/log/#Fatal" target="_blank">log.Fatal</a>(err)
+<span class="linenumber">3 </span>}
+<span class="linenumber">4 </span>b, err := strconv.Atoi(words[<span class="number">1</span>]); if err != nil {
+<span class="linenumber">5 </span>    log.Fatal(err)
+<span class="linenumber">6 </span>}
+<span class="linenumber">7 </span>n, err := strconv.Atoi(words[<span class="number">2</span>]); if err != nil {
+<span class="linenumber">8 </span>    log.Fatal(err)
+<span class="linenumber">9 </span>}</code></pre>
+
+<br>
+<p>It's rather verbose, eh? Here's a succinct way to express it. First define a new function:</p>
+<pre class="syntax"><code><span class="comment"><span class="linenumber">1 </span>// check takes an error as input and will log the error
+<span class="linenumber">2 </span>// and terminate the program if it's anything other than nil.</span>
+<span class="linenumber">3 </span><span class="builtin">func</span> check(err <span class="type">error</span>) {
+<span class="linenumber">4 </span>    <span class="identifier">if</span> err != <span class="builtin">nil</span> {
+<span class="linenumber">5 </span>        log.Fatal(err)
+<span class="linenumber">6 </span>    }
+<span class="linenumber">7 </span>}</code></pre>
+
+<br>
+<p>With this function at hand, we can express the repetitive variable declarations much more cleanly:</p>
+<pre class="syntax"><code><span class="linenumber">1 </span>a, err := strconv.Atoi(text[<span class="number">0</span>])
+<span class="linenumber">2 </span>check(err)
+<span class="linenumber">3 </span>b, err := strconv.Atoi(text[<span class="number">1</span>])
+<span class="linenumber">4 </span>check(err)
+<span class="linenumber">5 </span>n, err := strconv.Atoi(text[<span class="number">2</span>])
+<span class="linenumber">6 </span>check(err)</code></pre>
+
+<br>
+<p>And, in fact, we could even declare these three variables on three lines! How about that.
+<pre class="syntax"><code><span class="linenumber">1 </span>a, err := strconv.Atoi(text[<span class="number">0</span>]); check(err)
+<span class="linenumber">2 </span>b, err := strconv.Atoi(text[<span class="number">1</span>]); check(err)
+<span class="linenumber">3 </span>n, err := strconv.Atoi(text[<span class="number">2</span>]); check(err)</code></pre>
+
+<br>
+<p>What's that? "Semicolons in Go?! Blasphemy!" you say? I would argue that semicolons that are actually <em>gramatically correct</em>, rather than just to tell the compiler to terminate a statement, are more than justified. These lines read "assign the converted string to a variable, and check if there was an error." And since a piece of code is read many more times than it is written, this uniform layout is a big plus for readability.<p>
+<p>It may not be entirely idiomatic, but once you know the rules you can break them.</p>
+          <hr>
 
           <h2>Big Square</h2>
-          <p>Placeholder content. This will be replaced by a description of a better way to implement a 2 x 2 array of strings with string keys in Objective-C.
-          </p>
+
+<p>Placeholder content. This will be replaced by a description of a better way to implement a 2 x 2 array of strings with string keys in Objective-C.</p>
         </div>
       </div>
     </div>
