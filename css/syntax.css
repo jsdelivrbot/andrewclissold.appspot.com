@@ -1,19 +1,27 @@
 .syntax .builtin {
-  color: darkorange;
+  color: darkgoldenrod;
 }
 
 .syntax .comment {
-  color: darkgray;
+  color: dimgray;
 }
 
-.syntax .function {
-  color: goldenrod;
+.syntax .identifier {
+  color: darkorange;
+}
+
+.syntax .linenumber {
+  color: lightgray;
 }
 
 .syntax .number {
-  color: royalblue;
+  color: darkturquoise;
 }
 
 .syntax .string {
   color: forestgreen;
+}
+
+.syntax .type {
+  color: darkred;
 }
