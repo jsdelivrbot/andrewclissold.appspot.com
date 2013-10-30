@@ -1,3 +1,12 @@
+body {
+  margin-bottom: 80px;
+}
+
+code {
+  color: #a00;
+  background-color: #f5f5f5;
+}
+
 /* remove first two classes? */
 .btn-primary {
   background-color: #a00;
