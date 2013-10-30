@@ -27,6 +27,8 @@
 
   </head>
 
+  <body>
+
     <!-- Static navbar -->
     <div class="navbar navbar-default navbar-static-top">
       <div class="container">
@@ -45,84 +47,109 @@
             <li><a href="theory.html">Theory</a></li>
             <li><a href="music.html">Music</a></li>
             <li><a href="snips.html">Snips</a></li>
-            <!--
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li class="dropdown-header">Nav header</li>
-                <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li>
-              </ul>
-            </li>
-            -->
           </ul>
         </div>
       </div>
     </div> <!-- /navbar -->
 
     <div class="container">
-      <div class="row">
-        <div class="col-md-3">
-          <ul class="list-group">
-            <li class="list-group-item">Golang Errors</li>
-            <li class="list-group-item">Big Square</li>
-          </ul>
-        </div>
-        <div class="col-md-9" role="main">
 
-          <h2>Golang Errors</h2>
+    <h2>Golang Errors</h2>
+    <small class="pull-right" style="margin-top:-28px">29 Oct 2013</small>
 
 <br>
 <p>Consider the following idiomatic Go code. Let <code>words</code> be a slice of strings.</p>
-<pre class="syntax"><code><span class="linenumber">1 </span>a, err := <a href="http://golang.org/pkg/strconv/#Atoi" target="_blank">strconv.Atoi</a>(words[<span class="number">0</span>]); if err != <span class="builtin">nil</span> {
+<pre class="syntax"><span class="linenumber">1 </span>a, err := <a href="http://golang.org/pkg/strconv/#Atoi" target="_blank">strconv.Atoi</a>(words[<span class="number">0</span>]); if err != <span class="builtin">nil</span> {
 <span class="linenumber">2 </span>     <a href="http://golang.org/pkg/log/#Fatal" target="_blank">log.Fatal</a>(err)
 <span class="linenumber">3 </span>}
-<span class="linenumber">4 </span>b, err := strconv.Atoi(words[<span class="number">1</span>]); if err != nil {
+<span class="linenumber">4 </span>b, err := strconv.Atoi(words[<span class="number">1</span>]); if err != <span class="builtin">nil</span> {
 <span class="linenumber">5 </span>    log.Fatal(err)
 <span class="linenumber">6 </span>}
-<span class="linenumber">7 </span>n, err := strconv.Atoi(words[<span class="number">2</span>]); if err != nil {
+<span class="linenumber">7 </span>n, err := strconv.Atoi(words[<span class="number">2</span>]); if err != <span class="builtin">nil</span> {
 <span class="linenumber">8 </span>    log.Fatal(err)
-<span class="linenumber">9 </span>}</code></pre>
+<span class="linenumber">9 </span>}</pre>
 
 <br>
 <p>It's rather verbose, eh? Here's a succinct way to express it. First define a new function:</p>
-<pre class="syntax"><code><span class="comment"><span class="linenumber">1 </span>// check takes an error as input and will log the error
+<pre class="syntax"><span class="comment"><span class="linenumber">1 </span>// check takes an error as input and will log the error
 <span class="linenumber">2 </span>// and terminate the program if it's anything other than nil.</span>
 <span class="linenumber">3 </span><span class="builtin">func</span> check(err <span class="type">error</span>) {
 <span class="linenumber">4 </span>    <span class="identifier">if</span> err != <span class="builtin">nil</span> {
 <span class="linenumber">5 </span>        log.Fatal(err)
 <span class="linenumber">6 </span>    }
-<span class="linenumber">7 </span>}</code></pre>
+<span class="linenumber">7 </span>}</pre>
 
 <br>
-<p>With this function at hand, we can express the repetitive variable declarations much more cleanly:</p>
-<pre class="syntax"><code><span class="linenumber">1 </span>a, err := strconv.Atoi(text[<span class="number">0</span>])
+<p>With this function at hand, we can express the repetitive variable declarations much more cleanly.</p>
+<pre class="syntax"><span class="linenumber">1 </span>a, err := strconv.Atoi(text[<span class="number">0</span>])
 <span class="linenumber">2 </span>check(err)
 <span class="linenumber">3 </span>b, err := strconv.Atoi(text[<span class="number">1</span>])
 <span class="linenumber">4 </span>check(err)
 <span class="linenumber">5 </span>n, err := strconv.Atoi(text[<span class="number">2</span>])
-<span class="linenumber">6 </span>check(err)</code></pre>
+<span class="linenumber">6 </span>check(err)</pre>
 
 <br>
 <p>And, in fact, we could even declare these three variables on three lines! How about that.
-<pre class="syntax"><code><span class="linenumber">1 </span>a, err := strconv.Atoi(text[<span class="number">0</span>]); check(err)
+<pre class="syntax"><span class="linenumber">1 </span>a, err := strconv.Atoi(text[<span class="number">0</span>]); check(err)
 <span class="linenumber">2 </span>b, err := strconv.Atoi(text[<span class="number">1</span>]); check(err)
-<span class="linenumber">3 </span>n, err := strconv.Atoi(text[<span class="number">2</span>]); check(err)</code></pre>
+<span class="linenumber">3 </span>n, err := strconv.Atoi(text[<span class="number">2</span>]); check(err)</pre>
 
 <br>
 <p>What's that? "Semicolons in Go?! Blasphemy!" you say? I would argue that semicolons that are actually <em>gramatically correct</em>, rather than just to tell the compiler to terminate a statement, are more than justified. These lines read "assign the converted string to a variable, and check if there was an error." And since a piece of code is read many more times than it is written, this uniform layout is a big plus for readability.<p>
 <p>It may not be entirely idiomatic, but once you know the rules you can break them.</p>
-          <hr>
 
-          <h2>Big Square</h2>
+<small class="pull-right">Inspired by <a href="https://github.com/aclissold/CodeEval/blob/master/problem001.go#L63-L65" target="_blank">one of my CodeEval solutions</a>.</small>
+<br>
 
-<p>Placeholder content. This will be replaced by a description of a better way to implement a 2 x 2 array of strings with string keys in Objective-C.</p>
-        </div>
-      </div>
+    <hr>
+
+    <h2>Big Square</h2>
+
+    <p>I recently came across the need to store a lot of strings with the ability to look up using
+    strings as well. This is more or less a two-dimensional dictionary with strings for keys.
+    That's a lot of strings! This is the context of my
+    <a href="https://github.com/aclissold/Pokemon-Types" target="_blank">Pokémon Types</a> app.
+    For example, to determine the effectiveness of a water move attacking a fire Pokémon:
+<pre class="syntax"><span class="linenumber">1</span> <span class="builtin">NSDictionary</span> *typeMatchups = [<span class="builtin">NSDictionary</span> dictionaryWithObject:[<span class="builtin">NSDictionary</span> dictionaryWithObject:<span class="string">@"superEffective"</span> forKey:<span class="string">@"fire"</span>] forKey:<span class="string">@"water"</span>];
+<span class="linenumber">2</span> [[typeMatchups objectForKey:<span class="string">@"water"</span>] objectForKey:<span class="string">@"fire"</span>]; <span class="comment">// calling this will return @"superEffective"</comment></pre>
+
+<br>
+<p>Whew! That's a lot of overhead and verbosity. Considering there are 18 types, this would be an
+18x18 2D dictionary. That's 324 strings, not even counting the keys! If we conservatively estimate
+the size of these objects to be just the sum of the chars that make up the strings,
+we get 4 bytes per character * 14 characters * 324 strings = 18,144 bytes. Keep in mind that this
+is disregarding the overhead and built-in attributes of Objective-C objects.</p>
+
+<p>Surely there must be a better way? There is! And don't call me Shirley. Declare an
+<code>enum</code> of Pokémon types.
+<pre class="syntax"><span class="linenumber">1</span> <span class="identifier">enum</span> types {
+<span class="linenumber">2</span>     bug,
+<span class="linenumber">3</span>     dark,
+<span class="linenumber">4</span>     ...,
+<span class="linenumber">5</span>     water
+<span class="linenumber">6</span> };</pre>
+
+<br>
+<p>Our "strings" are now plain old <code>int</code>s ranging from 0 - 17. While we're
+at it, let's declare another enum for each of the four effectivenesses:
+<pre class="syntax"><span class="linenumber">1</span> <span class="identifier">enum</span> effectiveness {
+<span class="linenumber">2</span>     noEffect,
+<span class="linenumber">3</span>     notVeryEffective,
+<span class="linenumber">4</span>     normallyEffective,
+<span class="linenumber">5</span>     superEffective
+<span class="linenumber">6</span> };</pre>
+
+<br>
+<p>Now the dictionaries' values are ints as well. At this point, our scary
+<code>NSDictionary</code> can be condensed down to a plain C integer array!
+<pre class="syntax"><span class="linenumber">1</span> <span class="identifier">int</span> typeMatchups[<span class="number">18</span>][<span class="number">18</span>];
+<span class="linenumber">2</span> typeMatchups[water][fire] = superEffective;</pre>
+
+<br>
+<small class="pull-right">Just image how atrocious
+<a href="https://github.com/aclissold/Pokemon-Types/blob/master/Poke%CC%81mon%20Types/QuickViewController.m#L77-L434" target="_blank">this</a>
+would be.</small>
+
     </div>
 
 
@@ -131,5 +158,7 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+
   </body>
+
 </html>
