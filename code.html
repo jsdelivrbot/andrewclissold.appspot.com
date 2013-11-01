@@ -58,14 +58,14 @@
     <small class="pull-right" style="margin-top:-28px">29 Oct 2013</small>
 
 <br>
-<p>Consider the following idiomatic Go code. Let <code>words</code> be a slice of strings.</p>
-<pre class="syntax"><span class="linenumber">1 </span>a, err := <a href="http://golang.org/pkg/strconv/#Atoi" target="_blank">strconv.Atoi</a>(words[<span class="number">0</span>]); if err != <span class="builtin">nil</span> {
+<p>Consider the following idiomatic Go code. Assume <code>data</code> is a slice of strings representing integers.</p>
+<pre class="syntax"><span class="linenumber">1 </span>a, err := <a href="http://golang.org/pkg/strconv/#Atoi" target="_blank">strconv.Atoi</a>(data[<span class="number">0</span>]); if err != <span class="builtin">nil</span> {
 <span class="linenumber">2 </span>     <a href="http://golang.org/pkg/log/#Fatal" target="_blank">log.Fatal</a>(err)
 <span class="linenumber">3 </span>}
-<span class="linenumber">4 </span>b, err := strconv.Atoi(words[<span class="number">1</span>]); if err != <span class="builtin">nil</span> {
+<span class="linenumber">4 </span>b, err := strconv.Atoi(data[<span class="number">1</span>]); if err != <span class="builtin">nil</span> {
 <span class="linenumber">5 </span>    log.Fatal(err)
 <span class="linenumber">6 </span>}
-<span class="linenumber">7 </span>n, err := strconv.Atoi(words[<span class="number">2</span>]); if err != <span class="builtin">nil</span> {
+<span class="linenumber">7 </span>n, err := strconv.Atoi(data[<span class="number">2</span>]); if err != <span class="builtin">nil</span> {
 <span class="linenumber">8 </span>    log.Fatal(err)
 <span class="linenumber">9 </span>}</pre>
 
@@ -81,18 +81,18 @@
 
 <br>
 <p>With this function at hand, we can express the repetitive variable declarations much more cleanly.</p>
-<pre class="syntax"><span class="linenumber">1 </span>a, err := strconv.Atoi(text[<span class="number">0</span>])
+<pre class="syntax"><span class="linenumber">1 </span>a, err := strconv.Atoi(data[<span class="number">0</span>])
 <span class="linenumber">2 </span>check(err)
-<span class="linenumber">3 </span>b, err := strconv.Atoi(text[<span class="number">1</span>])
+<span class="linenumber">3 </span>b, err := strconv.Atoi(data[<span class="number">1</span>])
 <span class="linenumber">4 </span>check(err)
-<span class="linenumber">5 </span>n, err := strconv.Atoi(text[<span class="number">2</span>])
+<span class="linenumber">5 </span>n, err := strconv.Atoi(data[<span class="number">2</span>])
 <span class="linenumber">6 </span>check(err)</pre>
 
 <br>
 <p>And, in fact, we could even declare these three variables on three lines! How about that.
-<pre class="syntax"><span class="linenumber">1 </span>a, err := strconv.Atoi(text[<span class="number">0</span>]); check(err)
-<span class="linenumber">2 </span>b, err := strconv.Atoi(text[<span class="number">1</span>]); check(err)
-<span class="linenumber">3 </span>n, err := strconv.Atoi(text[<span class="number">2</span>]); check(err)</pre>
+<pre class="syntax"><span class="linenumber">1 </span>a, err := strconv.Atoi(data[<span class="number">0</span>]); check(err)
+<span class="linenumber">2 </span>b, err := strconv.Atoi(data[<span class="number">1</span>]); check(err)
+<span class="linenumber">3 </span>n, err := strconv.Atoi(data[<span class="number">2</span>]); check(err)</pre>
 
 <br>
 <p>What's that? "Semicolons in Go?! Blasphemy!" you say? I would argue that semicolons that are actually <em>gramatically correct</em>, rather than just to tell the compiler to terminate a statement, are more than justified. These lines read "assign the converted string to a variable, and check if there was an error." And since a piece of code is read many more times than it is written, this uniform layout is a big plus for readability.<p>
