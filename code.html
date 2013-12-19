@@ -109,7 +109,7 @@
     <p>I recently came across the need to store a lot of strings with the ability to look up using
     strings as well. This is more or less a two-dimensional dictionary with strings for keys.
     That's a lot of strings! This is the context of my
-    <a href="https://github.com/aclissold/Pokemon-Types" target="_blank">Pokémon Types</a> app.
+    <a href="https://github.com/aclissold/Types" target="_blank">Pokémon Types</a> app.
     For example, to determine the effectiveness of a water move attacking a fire Pokémon:
 <pre class="syntax"><span class="linenumber">1</span> <span class="builtin">NSDictionary</span> *typeMatchups = [<span class="builtin">NSDictionary</span> dictionaryWithObject:[<span class="builtin">NSDictionary</span> dictionaryWithObject:<span class="string">@"superEffective"</span> forKey:<span class="string">@"fire"</span>] forKey:<span class="string">@"water"</span>];
 <span class="linenumber">2</span> [[typeMatchups objectForKey:<span class="string">@"water"</span>] objectForKey:<span class="string">@"fire"</span>]; <span class="comment">// calling this will return @"superEffective"</comment></pre>
@@ -148,7 +148,7 @@ at it, let's declare another enum for each of the four effectivenesses:
 
 <br>
 <small class="pull-right">Just imagine how atrocious
-<a href="https://github.com/aclissold/Pokemon-Types/blob/master/Poke%CC%81mon%20Types/PokeBallFactory.m#L45-L402" target="_blank">this</a>
+<a href="https://github.com/aclissold/Types/blob/63e774e4cc34abdef276c7264a3f8544096b50a2/Types/PokeBallFactory.m#L25-L383" target="_blank">this</a>
 would be.</small>
 
     </div>
