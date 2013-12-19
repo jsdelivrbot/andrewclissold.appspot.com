@@ -30,6 +30,32 @@ code {
   background-color: #a00;
 }
 
+.nav li {
+  border-radius: 0;
+  box-shadow: none;
+  transition: box-shadow .2s ease-out;
+  -moz-box-shadow: none
+  -moz-transition: -moz-box-shadow .2s ease-out;
+  -webkit-box-shadow: none;
+  -webkit-transition: -webkit-box-shadow .2s ease-out;
+}
+
+.nav li:hover, .nav li:active {
+  border-radius: 2px;
+  box-shadow: inset 3px 0 rgba(200, 0, 0, 1), inset -3px 0 rgba(200, 0, 0, 1);
+  transition: box-shadow .2s ease-out;
+  -moz-box-shadow: inset 3px 0 rgba(200, 0, 0, 1), inset -3px 0 rgba(200, 0, 0, 1);
+  -moz-transition: -moz-box-shadow .2s ease-out;
+  -webkit-box-shadow: inset 3px 0 rgba(200, 0, 0, 1), inset -3px 0 rgba(200, 0, 0, 1);
+  -webkit-transition: -webkit-box-shadow .2s ease-out;
+}
+
+.nav li.active a {
+    box-shadow: inset 3px 3px 15px #d7d7d7;
+    -webkit-box-shadow: inset 3px 3px 15px #d7d7d7;
+    -moz-box-shadow: inset 3px 3px 15px #d7d7d7;
+}
+
 .navbar-default .navbar-brand {
   color: #a00;
 }
