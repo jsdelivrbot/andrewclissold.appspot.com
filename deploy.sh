@@ -1,5 +1,7 @@
 #!/bin/bash
 
+minify css/styles.css
+minify css/syntax.css
 rsync -arv               \
     --exclude deploy.sh  \
     --exclude .git       \
