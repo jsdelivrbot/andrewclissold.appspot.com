@@ -1,13 +1,16 @@
 package andrewclissold
 
+import "html/template"
 import "net/http"
+import "strings"
 
 func init() {
 	http.HandleFunc("/", rootHandler)
-	http.HandleFunc("/code", codeHandler)
-	http.HandleFunc("/theory", theoryHandler)
-	http.HandleFunc("/music", musicHandler)
-	http.HandleFunc("/snips", snipsHandler)
+
+	http.HandleFunc("/code", pageHandler)
+	http.HandleFunc("/theory", pageHandler)
+	http.HandleFunc("/music", pageHandler)
+	http.HandleFunc("/snips", pageHandler)
 
 	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("css"))))
 	http.Handle("/js/", http.StripPrefix("/js/", http.FileServer(http.Dir("js"))))
@@ -22,18 +25,28 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "index.html")
 }
 
-func codeHandler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "code.html")
+func pageHandler(w http.ResponseWriter, r *http.Request) {
+	title := strings.ToUpper(string(r.URL.Path[1])) + r.URL.Path[2:]
+
+	templates.ExecuteTemplate(w, "header.html", &info{title, ie})
+	templates.ExecuteTemplate(w, r.URL.Path[1:] + ".html", nil)
+	templates.ExecuteTemplate(w, "footer.html", title)
 }
 
-func theoryHandler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "theory.html")
+type info struct {
+	Title string
+	IE    template.HTML
 }
 
-func musicHandler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "music.html")
-}
+var ie template.HTML = `
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->`
 
-func snipsHandler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "snips.html")
-}
+var templates = template.Must(template.ParseFiles(
+	"header.html",
+
+	"code.html", "theory.html", "music.html", "snips.html",
+
+	"footer.html"))
