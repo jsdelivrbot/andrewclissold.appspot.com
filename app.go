@@ -2,6 +2,7 @@ package andrewclissold
 
 import "github.com/russross/blackfriday"
 import "html/template"
+import "io/ioutil"
 import "net/http"
 import "os"
 import "strings"
@@ -31,36 +32,65 @@ func pageHandler(w http.ResponseWriter, r *http.Request) {
 	title := strings.ToUpper(string(r.URL.Path[1])) + r.URL.Path[2:]
 
 	templates.ExecuteTemplate(w, "header.html", &info{title, ie})
-	templates.ExecuteTemplate(w, r.URL.Path[1:] + ".html", nil)
+	templates.ExecuteTemplate(w, r.URL.Path[1:]+".html", nil)
 	templates.ExecuteTemplate(w, "footer.html", title)
 }
 
 func postHandler(w http.ResponseWriter, r *http.Request) {
+    path := r.URL.Path[1:]
 	title := strings.ToUpper(string(r.URL.Path[1])) + r.URL.Path[2:]
 
-	file, err := os.Open(r.URL.Path[1:] + ".md")
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	fi, err := file.Stat()
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	data := make([]byte, fi.Size())
-	file.Read(data)
+	posts := make([][]byte, 0)
 
+    // Find all posts within the directory
+	dir := "posts/" + path + "/"
+	files, err := ioutil.ReadDir(dir)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// Set up the markdown renderer
 	htmlFlags := 0
 	htmlFlags |= blackfriday.HTML_GITHUB_BLOCKCODE
 	htmlFlags |= blackfriday.HTML_USE_SMARTYPANTS
 	htmlFlags |= blackfriday.HTML_SMARTYPANTS_LATEX_DASHES
 	renderer := blackfriday.HtmlRenderer(htmlFlags, "", "")
 
-	markdown := blackfriday.Markdown(data, renderer, blackfriday.EXTENSION_FENCED_CODE)
+	for _, file := range files {
+		if file.IsDir() {
+			continue
+		}
+
+		// Open and read the file
+		file, err := os.Open(dir + file.Name())
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		fi, err := file.Stat()
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		data := make([]byte, fi.Size())
+		file.Read(data)
+
+		// Render the file's markdown
+		post := blackfriday.Markdown(data, renderer, blackfriday.EXTENSION_FENCED_CODE)
+
+		posts = append(posts, post)
+	}
 
 	templates.ExecuteTemplate(w, "header.html", &info{title, ie})
-	w.Write(markdown)
+	templates.ExecuteTemplate(w, path+".tmpl", nil)
+	for i, post := range posts {
+		w.Write(post)
+		if i < len(posts)-1 {
+			w.Write([]byte("<hr>"))
+		}
+	}
+
 	templates.ExecuteTemplate(w, "footer.html", title)
 }
 
@@ -78,6 +108,6 @@ var ie template.HTML = `
 var templates = template.Must(template.ParseFiles(
 	"header.html",
 
-	"code.html", "theory.html", "music.html",
+	"code.html", "theory.html", "music.html", "tmpl/snips.tmpl",
 
 	"footer.html"))
