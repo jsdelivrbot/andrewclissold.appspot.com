@@ -5,6 +5,7 @@ import "html/template"
 import "io/ioutil"
 import "net/http"
 import "os"
+import "regexp"
 import "strings"
 
 func init() {
@@ -57,18 +58,18 @@ func postHandler(w http.ResponseWriter, r *http.Request) {
 	htmlFlags |= blackfriday.HTML_SMARTYPANTS_LATEX_DASHES
 	renderer := blackfriday.HtmlRenderer(htmlFlags, "", "")
 
-	for _, file := range files {
-		if file.IsDir() {
+	for _, fi := range files {
+		re := regexp.MustCompile(`\.md$`)
+		if !re.Match([]byte(fi.Name())) {
 			continue
 		}
 
 		// Open and read the file
-		file, err := os.Open(dir + file.Name())
+		file, err := os.Open(dir + fi.Name())
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		fi, err := file.Stat()
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
