@@ -1,12 +1,16 @@
 package andrewclissold
 
-import "github.com/russross/blackfriday"
-import "html/template"
-import "io/ioutil"
-import "net/http"
-import "os"
-import "regexp"
-import "strings"
+import (
+	"bufio"
+	"github.com/russross/blackfriday"
+	"html/template"
+	"io/ioutil"
+	"net/http"
+	"os"
+	"regexp"
+	"strings"
+	"time"
+)
 
 func init() {
 	http.HandleFunc("/", rootHandler)
@@ -38,12 +42,12 @@ func pageHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func postHandler(w http.ResponseWriter, r *http.Request) {
-    path := r.URL.Path[1:]
+	path := r.URL.Path[1:]
 	title := strings.ToUpper(string(r.URL.Path[1])) + r.URL.Path[2:]
 
-	posts := make([][]byte, 0)
+	var posts []post
 
-    // Find all posts within the directory
+	// Find all posts within the directory
 	dir := "posts/" + path + "/"
 	files, err := ioutil.ReadDir(dir)
 	if err != nil {
@@ -59,40 +63,64 @@ func postHandler(w http.ResponseWriter, r *http.Request) {
 	renderer := blackfriday.HtmlRenderer(htmlFlags, "", "")
 
 	for _, fi := range files {
+		// Skip any files not ending in ".md"
 		re := regexp.MustCompile(`\.md$`)
 		if !re.Match([]byte(fi.Name())) {
 			continue
 		}
 
-		// Open and read the file
+		// Open the file
 		file, err := os.Open(dir + fi.Name())
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
+
+		scanner := bufio.NewScanner(file)
+
+		// Read the first line of the file as the post's creation date
+		scanner.Scan()
+		ref := "2 Jan 2006"
+		date, err := time.Parse(ref, scanner.Text())
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		data := make([]byte, fi.Size())
-		file.Read(data)
+
+		// Read the rest of the file as the post itself
+		var data []byte
+		for scanner.Scan() {
+			data = append(data, scanner.Bytes()...)
+			data = append(data, '\n') // add back the stripped newlines
+		}
+		if err := scanner.Err(); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
 
 		// Render the file's markdown
-		post := blackfriday.Markdown(data, renderer, blackfriday.EXTENSION_FENCED_CODE)
+		content := blackfriday.Markdown(data, renderer, blackfriday.EXTENSION_FENCED_CODE)
 
-		posts = append(posts, post)
+		// Add the parsed post to the collection of posts
+		posts = append(posts, post{Content: content, Date: date})
 	}
+
+	// Sort the posts by creation date
 
 	templates.ExecuteTemplate(w, "header.html", &info{title, ie})
 	templates.ExecuteTemplate(w, path+".tmpl", nil)
 	for i, post := range posts {
-		w.Write(post)
+		w.Write(post.Content)
 		if i < len(posts)-1 {
 			w.Write([]byte("<hr>"))
 		}
 	}
-
 	templates.ExecuteTemplate(w, "footer.html", title)
+}
+
+type post struct {
+	Content []byte
+	Date    time.Time
 }
 
 type info struct {
