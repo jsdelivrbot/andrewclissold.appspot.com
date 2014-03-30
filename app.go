@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 	"regexp"
+	"sort"
 	"strings"
 	"time"
 )
@@ -45,7 +46,7 @@ func postHandler(w http.ResponseWriter, r *http.Request) {
 	path := r.URL.Path[1:]
 	title := strings.ToUpper(string(r.URL.Path[1])) + r.URL.Path[2:]
 
-	var posts []post
+	var posts Posts
 
 	// Find all posts within the directory
 	dir := "posts/" + path + "/"
@@ -106,6 +107,7 @@ func postHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Sort the posts by creation date
+	sort.Sort(posts)
 
 	templates.ExecuteTemplate(w, "header.html", &info{title, ie})
 	templates.ExecuteTemplate(w, path+".tmpl", nil)
@@ -121,6 +123,20 @@ func postHandler(w http.ResponseWriter, r *http.Request) {
 type post struct {
 	Content []byte
 	Date    time.Time
+}
+
+type Posts []post
+
+// Satisfy sort.Interface to sort posts by creation date
+func (p Posts) Len() int {
+	return len(p)
+}
+func (p Posts) Less(i, j int) bool {
+	// Return Date.After instead of Before to place them newest-first
+	return p[i].Date.After(p[j].Date)
+}
+func (p Posts) Swap(i, j int) {
+	p[i], p[j] = p[j], p[i]
 }
 
 type info struct {
