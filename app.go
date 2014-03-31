@@ -88,6 +88,11 @@ func postHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
+		// Don't display any posts intended for the future
+		if date.After(time.Now()) {
+			continue
+		}
+
 		// Read the rest of the file as the post itself
 		var data []byte
 		for scanner.Scan() {
