@@ -31,7 +31,12 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	http.ServeFile(w, r, "index.html")
+
+	title := "Home"
+
+	templates.ExecuteTemplate(w, "header.html", &info{title, ie})
+	templates.ExecuteTemplate(w, "index.html", nil)
+	templates.ExecuteTemplate(w, "footer.html", title)
 }
 
 func pageHandler(w http.ResponseWriter, r *http.Request) {
@@ -159,6 +164,8 @@ var ie template.HTML = `
 
 var templates = template.Must(template.ParseFiles(
 	"header.html",
+
+	"index.html",
 
 	"apps/theory.html", "apps/types.html",
 
