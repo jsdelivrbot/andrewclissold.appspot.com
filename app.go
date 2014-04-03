@@ -16,9 +16,7 @@ import (
 func init() {
 	http.HandleFunc("/", rootHandler)
 
-	http.HandleFunc("/apps/theory", pageHandler)
-	http.HandleFunc("/apps/types", pageHandler)
-
+	http.HandleFunc("/apps/", pageHandler)
 	http.HandleFunc("/code", pageHandler)
 	http.HandleFunc("/music", pageHandler)
 	http.HandleFunc("/snips", postHandler)
