@@ -16,8 +16,10 @@ import (
 func init() {
 	http.HandleFunc("/", rootHandler)
 
+	http.HandleFunc("/apps/theory", pageHandler)
+	http.HandleFunc("/apps/types", pageHandler)
+
 	http.HandleFunc("/code", pageHandler)
-	http.HandleFunc("/theory", pageHandler)
 	http.HandleFunc("/music", pageHandler)
 	http.HandleFunc("/snips", postHandler)
 
@@ -35,10 +37,12 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func pageHandler(w http.ResponseWriter, r *http.Request) {
-	title := strings.ToUpper(string(r.URL.Path[1])) + r.URL.Path[2:]
+	i := strings.LastIndex(r.URL.Path, "/") + 1
+
+	title := strings.ToUpper(string(r.URL.Path[i])) + r.URL.Path[i+1:]
 
 	templates.ExecuteTemplate(w, "header.html", &info{title, ie})
-	templates.ExecuteTemplate(w, r.URL.Path[1:]+".html", nil)
+	templates.ExecuteTemplate(w, r.URL.Path[i:]+".html", nil)
 	templates.ExecuteTemplate(w, "footer.html", title)
 }
 
@@ -158,6 +162,8 @@ var ie template.HTML = `
 var templates = template.Must(template.ParseFiles(
 	"header.html",
 
-	"code.html", "theory.html", "music.html", "tmpl/snips.tmpl",
+	"apps/theory.html", "apps/types.html",
+
+	"code.html", "music.html", "tmpl/snips.tmpl",
 
 	"footer.html"))

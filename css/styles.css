@@ -30,7 +30,12 @@ code {
   border-color: #800;
 }
 
+.dropdown-menu>li.active>a:hover, .dropdown-menu>li.active>a:focus,
 .dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus {
+  background-color: #800;
+}
+
+.dropdown-menu>li.active>a {
   background-color: #a00;
 }
 
@@ -44,7 +49,7 @@ code {
   -webkit-transition: -webkit-box-shadow .2s ease-out;
 }
 
-.nav li:hover, .nav li:active {
+.nav>li:hover, .nav>li:active, .nav>li.dropdown.open {
   border-radius: 2px;
   box-shadow: inset 3px 0 rgba(200, 0, 0, 1), inset -3px 0 rgba(200, 0, 0, 1);
   transition: box-shadow .2s ease-out;
@@ -54,10 +59,16 @@ code {
   -webkit-transition: -webkit-box-shadow .2s ease-out;
 }
 
-.nav li.active a {
+.nav>li.active>a {
     box-shadow: inset 3px 3px 15px #d7d7d7;
     -webkit-box-shadow: inset 3px 3px 15px #d7d7d7;
     -moz-box-shadow: inset 3px 3px 15px #d7d7d7;
+}
+
+.navbar-default .navbar-nav>.open>a,
+.navbar-default .navbar-nav>.open>a:hover,
+.navbar-default .navbar-nav>.open>a:focus {
+  background-color: transparent;
 }
 
 .navbar-default .navbar-brand {
