@@ -17,7 +17,6 @@ func init() {
 	http.HandleFunc("/", rootHandler)
 
 	http.HandleFunc("/apps/", pageHandler)
-	http.HandleFunc("/code", pageHandler)
 	http.HandleFunc("/music", pageHandler)
 	http.HandleFunc("/snips", postHandler)
 
@@ -170,6 +169,6 @@ var templates = template.Must(template.ParseFiles(
 
 	"apps/theory.html", "apps/types.html",
 
-	"code.html", "music.html", "tmpl/snips.tmpl",
+	"music.html", "tmpl/snips.tmpl",
 
 	"footer.html"))
