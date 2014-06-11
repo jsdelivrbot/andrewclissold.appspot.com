@@ -8,14 +8,44 @@ a:active, a:hover, a:focus {
 
 body {
   margin-bottom: 80px;
+  font-family: 'Merriweather', 'serif';
+}
+
+pre[lang] {
+  max-width: 750px;
 }
 
 code {
-  color: #a00;
+  color: #555;
   background-color: #f5f5f5;
 }
 
-/* remove first two classes? */
+code, pre {
+  font-family: 'Source Code Pro', 'monospace';
+}
+
+h1, h2, h3, h4, h5, h6, .nav {
+  font-family: 'Source Sans Pro', 'sans-serif';
+  font-weight: 600;
+}
+
+h1.page-heading {
+  margin-bottom: 1em;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+img.coming-soon, .app-screenshot {
+  width: 100%;
+  height: auto;
+}
+
+.app-screenshot {
+  max-width: 360px;
+}
+
 .btn-primary {
   background-color: #a00;
   border-color: #800;
@@ -26,8 +56,22 @@ code {
   border-color: #800;
 }
 
+.dropdown-menu>li.active>a:hover, .dropdown-menu>li.active>a:focus,
 .dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus {
+  background-color: #800;
+}
+
+.dropdown-menu>li.active>a {
   background-color: #a00;
+}
+
+.list-group {
+  font-family: 'Source Sans Pro', 'sans-serif';
+}
+
+.nav {
+  font-weight: 300;
+  font-size: 1.25em;
 }
 
 .nav li {
@@ -40,7 +84,7 @@ code {
   -webkit-transition: -webkit-box-shadow .2s ease-out;
 }
 
-.nav li:hover, .nav li:active {
+.nav>li:hover, .nav>li:active, .nav>li.dropdown.open {
   border-radius: 2px;
   box-shadow: inset 3px 0 rgba(200, 0, 0, 1), inset -3px 0 rgba(200, 0, 0, 1);
   transition: box-shadow .2s ease-out;
@@ -50,14 +94,23 @@ code {
   -webkit-transition: -webkit-box-shadow .2s ease-out;
 }
 
-.nav li.active a {
+.nav>li.active>a {
     box-shadow: inset 3px 3px 15px #d7d7d7;
     -webkit-box-shadow: inset 3px 3px 15px #d7d7d7;
     -moz-box-shadow: inset 3px 3px 15px #d7d7d7;
 }
 
+.navbar-default .navbar-nav>.open>a,
+.navbar-default .navbar-nav>.open>a:hover,
+.navbar-default .navbar-nav>.open>a:focus {
+  background-color: transparent;
+}
+
 .navbar-default .navbar-brand {
   color: #a00;
+  font-family: 'Source Sans Pro', 'sans-serif';
+  font-weight: 600;
+  font-size: 2em;
 }
 
 .navbar-default .navbar-brand:hover,
@@ -87,7 +140,7 @@ code {
 }
 
 #email {
-  font-size:12pt;
+  font-size:0.75em;
 }
 
 #spotify-player {
@@ -100,7 +153,7 @@ code {
     }
 }
 
-#YouTube {
+#YouTube, img.app-screenshot {
   box-shadow: 0px 0px 15px #666;
   -moz-box-shadow: 0px 0px 15px #888;
   -webkit-box-shadow: 0px 0px 15px #888;

@@ -1,5 +1,5 @@
-SECS
-====
+andrewclissold.appspot.com
+==========================
 
-The source code for my website! Hosted on [Oakland University](http://oakland.edu/)'s School
-of Engineering and Computer Science servers. [Take a look!](http://secs.oakland.edu/~ajclisso/)
+The source code for my personal website. Hosted on Google's App Engine and
+written in Go. [Check it out!](http://andrewclissold.appspot.com/)

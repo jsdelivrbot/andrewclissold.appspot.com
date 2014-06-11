@@ -1,8 +1,10 @@
-.syntax .builtin {
+.syntax .builtin,
+.token.keyword {
   color: darkgoldenrod;
 }
 
-.syntax .comment {
+.syntax .comment,
+.token.comment {
   color: dimgray;
 }
 
@@ -14,14 +16,17 @@
   color: lightgray;
 }
 
-.syntax .number {
+.syntax .number,
+.token.number {
   color: darkturquoise;
 }
 
-.syntax .string {
+.syntax .string,
+.token.string {
   color: forestgreen;
 }
 
-.syntax .type {
+.syntax .type,
+.token.builtin {
   color: darkred;
 }
