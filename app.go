@@ -167,7 +167,7 @@ var templates = template.Must(template.ParseFiles(
 
 	"index.html",
 
-	"apps/theory.html", "apps/types.html",
+	"apps/types.html",
 
 	"music.html", "tmpl/snips.tmpl",
 
