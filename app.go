@@ -65,7 +65,6 @@ func postHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Set up the markdown renderer
 	htmlFlags := 0
-	htmlFlags |= blackfriday.HTML_GITHUB_BLOCKCODE
 	htmlFlags |= blackfriday.HTML_USE_SMARTYPANTS
 	htmlFlags |= blackfriday.HTML_SMARTYPANTS_LATEX_DASHES
 	renderer := blackfriday.HtmlRenderer(htmlFlags, "", "")
