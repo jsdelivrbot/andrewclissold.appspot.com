@@ -18,7 +18,7 @@ func init() {
 
 	http.HandleFunc("/apps", pageHandler)
 	http.HandleFunc("/music", pageHandler)
-	http.HandleFunc("/snips", postHandler)
+	http.HandleFunc("/snips", tabHandler)
 
 	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("css"))))
 	http.Handle("/js/", http.StripPrefix("/js/", http.FileServer(http.Dir("js"))))
@@ -49,14 +49,14 @@ func pageHandler(w http.ResponseWriter, r *http.Request) {
 	templates.ExecuteTemplate(w, "footer.html", title)
 }
 
-func postHandler(w http.ResponseWriter, r *http.Request) {
+func tabHandler(w http.ResponseWriter, r *http.Request) {
 	path := r.URL.Path[1:]
 	title := strings.ToUpper(string(r.URL.Path[1])) + r.URL.Path[2:]
 
 	var posts Posts
 
 	// Find all posts within the directory
-	dir := "posts/" + path + "/"
+	dir := "tabs/" + path + "/"
 	files, err := ioutil.ReadDir(dir)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
