@@ -35,9 +35,9 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 
 	title := "Home"
 
-	templates.ExecuteTemplate(w, "header.html", &info{title, ie})
+	templates.ExecuteTemplate(w, "header.tmpl", &info{title, ie})
 	templates.ExecuteTemplate(w, "index.html", nil)
-	templates.ExecuteTemplate(w, "footer.html", title)
+	templates.ExecuteTemplate(w, "footer.tmpl", title)
 }
 
 func pageHandler(w http.ResponseWriter, r *http.Request) {
@@ -45,9 +45,9 @@ func pageHandler(w http.ResponseWriter, r *http.Request) {
 
 	title := strings.ToUpper(string(r.URL.Path[i])) + r.URL.Path[i+1:]
 
-	templates.ExecuteTemplate(w, "header.html", &info{title, ie})
+	templates.ExecuteTemplate(w, "header.tmpl", &info{title, ie})
 	templates.ExecuteTemplate(w, r.URL.Path[i:]+".html", nil)
-	templates.ExecuteTemplate(w, "footer.html", title)
+	templates.ExecuteTemplate(w, "footer.tmpl", title)
 }
 
 func tabHandler(w http.ResponseWriter, r *http.Request) {
@@ -121,7 +121,7 @@ func tabHandler(w http.ResponseWriter, r *http.Request) {
 	// Sort the posts by creation date
 	sort.Sort(posts)
 
-	templates.ExecuteTemplate(w, "header.html", &info{title, ie})
+	templates.ExecuteTemplate(w, "header.tmpl", &info{title, ie})
 	templates.ExecuteTemplate(w, path+".tmpl", nil)
 	for i, post := range posts {
 		if i == len(posts)-1 {
@@ -132,7 +132,7 @@ func tabHandler(w http.ResponseWriter, r *http.Request) {
 		w.Write(post.Content)
 		w.Write([]byte(`</div>`))
 	}
-	templates.ExecuteTemplate(w, "footer.html", title)
+	templates.ExecuteTemplate(w, "footer.tmpl", title)
 }
 
 type post struct {
@@ -166,12 +166,8 @@ var ie template.HTML = `
     <![endif]-->`
 
 var templates = template.Must(template.ParseFiles(
-	"header.html",
-
+	"tmpl/header.tmpl",
 	"index.html",
-
 	"apps.html",
-
 	"music.html", "tmpl/snips.tmpl",
-
-	"footer.html"))
+	"tmpl/footer.tmpl"))
