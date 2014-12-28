@@ -16,8 +16,8 @@ import (
 func init() {
 	http.HandleFunc("/", rootHandler)
 
-	http.HandleFunc("/apps", pageHandler)
-	http.HandleFunc("/music", pageHandler)
+	http.HandleFunc("/apps", tabHandler)
+	http.HandleFunc("/music", tabHandler)
 	http.HandleFunc("/snips", tabHandler)
 
 	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("css"))))
@@ -37,16 +37,6 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 
 	templates.ExecuteTemplate(w, "header.tmpl", &info{title, ie})
 	templates.ExecuteTemplate(w, "index.html", nil)
-	templates.ExecuteTemplate(w, "footer.tmpl", title)
-}
-
-func pageHandler(w http.ResponseWriter, r *http.Request) {
-	i := strings.LastIndex(r.URL.Path, "/") + 1
-
-	title := strings.ToUpper(string(r.URL.Path[i])) + r.URL.Path[i+1:]
-
-	templates.ExecuteTemplate(w, "header.tmpl", &info{title, ie})
-	templates.ExecuteTemplate(w, r.URL.Path[i:]+".html", nil)
 	templates.ExecuteTemplate(w, "footer.tmpl", title)
 }
 
@@ -168,6 +158,5 @@ var ie template.HTML = `
 var templates = template.Must(template.ParseFiles(
 	"tmpl/header.tmpl",
 	"index.html",
-	"apps.html",
-	"music.html", "tmpl/snips.tmpl",
+	"tmpl/apps.tmpl", "tmpl/music.tmpl", "tmpl/snips.tmpl",
 	"tmpl/footer.tmpl"))

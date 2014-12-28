@@ -1,3 +1,5 @@
+28 Dec 2014
+
 <h2>Types</h2>
 
 <p>Types is a minimalistic iOS app to aid in remembrance of Pokémon type
