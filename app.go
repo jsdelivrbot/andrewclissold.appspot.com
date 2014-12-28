@@ -123,10 +123,13 @@ func tabHandler(w http.ResponseWriter, r *http.Request) {
 	templates.ExecuteTemplate(w, "header.html", &info{title, ie})
 	templates.ExecuteTemplate(w, path+".tmpl", nil)
 	for i, post := range posts {
-		w.Write(post.Content)
-		if i < len(posts)-1 {
-			w.Write([]byte("<hr>"))
+		if i == len(posts) - 1 {
+			w.Write([]byte(`<div class="post last">`))
+		} else {
+			w.Write([]byte(`<div class="post">`))
 		}
+		w.Write(post.Content)
+		w.Write([]byte(`</div>`))
 	}
 	templates.ExecuteTemplate(w, "footer.html", title)
 }

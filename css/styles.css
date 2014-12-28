@@ -139,6 +139,10 @@ img.coming-soon, .app-screenshot {
   }
 }
 
+.post:not(.last) {
+  margin-bottom: 7.5em;
+}
+
 #email {
   font-size:0.75em;
 }
