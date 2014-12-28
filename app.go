@@ -22,6 +22,7 @@ func init() {
 
 	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("css"))))
 	http.Handle("/js/", http.StripPrefix("/js/", http.FileServer(http.Dir("js"))))
+	http.Handle("/fonts/", http.StripPrefix("/fonts/", http.FileServer(http.Dir("fonts"))))
 	http.Handle("/ico/", http.StripPrefix("/ico/", http.FileServer(http.Dir("ico"))))
 	http.Handle("/img/", http.StripPrefix("/img/", http.FileServer(http.Dir("img"))))
 }
@@ -123,7 +124,7 @@ func tabHandler(w http.ResponseWriter, r *http.Request) {
 	templates.ExecuteTemplate(w, "header.html", &info{title, ie})
 	templates.ExecuteTemplate(w, path+".tmpl", nil)
 	for i, post := range posts {
-		if i == len(posts) - 1 {
+		if i == len(posts)-1 {
 			w.Write([]byte(`<div class="post last">`))
 		} else {
 			w.Write([]byte(`<div class="post">`))

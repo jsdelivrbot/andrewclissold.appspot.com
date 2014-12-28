@@ -49,6 +49,7 @@ img.coming-soon, .app-screenshot {
 .btn-primary {
   background-color: #a00;
   border-color: #800;
+  margin-bottom: 1em;
 }
 
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
@@ -63,6 +64,10 @@ img.coming-soon, .app-screenshot {
 
 .dropdown-menu>li.active>a {
   background-color: #a00;
+}
+
+.email {
+  font-size: 1em;
 }
 
 .list-group {
@@ -141,10 +146,6 @@ img.coming-soon, .app-screenshot {
 
 .post:not(.last) {
   margin-bottom: 7.5em;
-}
-
-#email {
-  font-size:0.75em;
 }
 
 #spotify-player {
