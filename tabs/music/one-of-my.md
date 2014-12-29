@@ -1,6 +1,8 @@
 28 Dec 2014
 
-<h2>One of my compositions:</h2>
+One of my compositions:
+-----------------------
+
 <div class="youtube-container">
   <iframe id="YouTube" width="560" height="315"
     src="http://www.youtube.com/embed/ZmermNhhIRs"
@@ -8,7 +10,9 @@
   </iframe>
 </div>
 
-<h2>One of my arrangements:</h2>
+One of my arrangements:
+-----------------------
+
 <div class="youtube-container">
   <iframe id="YouTube" width="560" height="315"
     src="http://www.youtube.com/embed/nfh-WRqh0iw"

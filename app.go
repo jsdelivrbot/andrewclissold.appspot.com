@@ -112,6 +112,7 @@ func tabHandler(w http.ResponseWriter, r *http.Request) {
 	sort.Sort(posts)
 
 	templates.ExecuteTemplate(w, "header.tmpl", &info{title, ie})
+	w.Write([]byte(`<div class="` + strings.ToLower(title) + `">`))
 	templates.ExecuteTemplate(w, path+".tmpl", nil)
 	for i, post := range posts {
 		if i == len(posts)-1 {
@@ -122,6 +123,7 @@ func tabHandler(w http.ResponseWriter, r *http.Request) {
 		w.Write(post.Content)
 		w.Write([]byte(`</div>`))
 	}
+	w.Write([]byte(`</div>`))
 	templates.ExecuteTemplate(w, "footer.tmpl", title)
 }
 
