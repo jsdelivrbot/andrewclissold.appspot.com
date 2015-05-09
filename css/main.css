@@ -8,7 +8,7 @@ a:active, a:hover, a:focus {
 
 body {
   margin-bottom: 80px;
-  font-family: 'Merriweather', 'serif';
+  font-family: 'Helvetica Neue', Helvetica, sans-serif;
 }
 
 pre[lang] {
