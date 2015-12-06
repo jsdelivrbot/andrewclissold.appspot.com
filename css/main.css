@@ -1,3 +1,10 @@
+::selection {
+  background: #fbb;
+}
+::-moz-selection {
+  background: #fbb;
+}
+
 a {
   color: #a00;
 }
